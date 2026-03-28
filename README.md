@@ -1,37 +1,14 @@
 # AI Dev Pipeline Tool
 
-## 概要
-
-このプロジェクトは、AIを活用した開発を段階的に管理するCLIツールです。
-
-開発フロー：
+CLI tool for managing a staged AI-assisted development workflow:
 
 ```text
-spec → test → code
+spec -> test -> code
 ```
 
-各フェーズは必ず人間の承認を経てから次へ進みます。
+Each phase requires explicit human approval before the workflow can advance.
 
----
-
-## 目的
-
-* AIが勝手に開発を進めることを防ぐ
-* テストファースト開発を強制する
-* 仕様の明確化を促進する
-
----
-
-## 機能
-
-* フェーズ管理（spec / test / code）
-* 承認フロー
-* 状態のファイル管理
-* CLIによる操作
-
----
-
-## フォルダ構成
+## Project Structure
 
 ```text
 src/ai_dev_pipeline_tool/
@@ -42,6 +19,7 @@ src/ai_dev_pipeline_tool/
 tests/
     test_state.py
     test_workflow.py
+    test_cli.py
 
 docs/specs/
     pipeline/spec.md
@@ -50,21 +28,70 @@ workspace/current/
     state.json
 ```
 
----
+## Package Name
 
-## セットアップ
+The Python package name is unified as:
 
-### 1. 仮想環境作成
-
-```bat
-python -m venv .venv
+```text
+ai_dev_pipeline_tool
 ```
 
-### 2. 有効化
+## Expected Module APIs
 
-```bat
-source .venv/bin/activate   # Mac/Linux
-.venv\Scripts\Activate.ps1  # Windows
+The current test suite assumes the following public APIs:
+
+```python
+# state.py
+initialize_state(state_path)
+load_state(state_path)
+save_state(state_path, state_data)
+
+# workflow.py
+approve_phase(current_state, phase_name)
+
+# cli.py
+main(argv=None)
 ```
 
-### 3. 依存関
+## Workflow Rules
+
+The workflow must always progress in this order:
+
+```text
+spec -> test -> code
+```
+
+Behavior for approval commands is defined as:
+
+* `approve spec`: approves the `spec` phase and advances to `test`
+* `approve tests`: approves the `test` phase and advances to `code`
+
+Invalid transitions must be blocked.
+
+## State File
+
+State is stored in:
+
+```text
+workspace/current/state.json
+```
+
+Expected format:
+
+```json
+{
+  "feature_name": "pipeline",
+  "phase": "spec",
+  "spec_approved": false,
+  "tests_approved": false,
+  "implementation_completed": false
+}
+```
+
+## Constraints
+
+* Keep the tool CLI-based
+* Do not introduce a database
+* Do not introduce a web UI
+* Only write workflow state under `workspace/current/`
+* Do not modify `docs/specs/pipeline/spec.md` through implementation work

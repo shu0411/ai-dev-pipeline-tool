@@ -160,7 +160,7 @@ AIを活用した開発において、以下の課題がある：
 ```text
 ai-dev-pipeline-tool/
   src/
-    ai_dev_pipeline/
+    ai_dev_pipeline_tool/
       cli.py
       state.py
       workflow.py
@@ -212,6 +212,8 @@ show-status
 approve spec
 approve tests
 ```
+
+approve spec は spec 承認後に test へ進む、approve tests は test 承認後に code へ進む
 
 ---
 
