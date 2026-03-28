@@ -6,7 +6,7 @@
 
 開発フロー：
 
-```
+```text
 spec → test → code
 ```
 
@@ -33,7 +33,7 @@ spec → test → code
 
 ## フォルダ構成
 
-```
+```text
 src/ai_dev_pipeline_tool/
     cli.py
     state.py
@@ -56,13 +56,13 @@ workspace/current/
 
 ### 1. 仮想環境作成
 
-```
+```bat
 python -m venv .venv
 ```
 
 ### 2. 有効化
 
-```
+```bat
 source .venv/bin/activate   # Mac/Linux
 .venv\Scripts\Activate.ps1  # Windows
 ```

@@ -157,7 +157,7 @@ AIを活用した開発において、以下の課題がある：
 
 ### フォルダ構成
 
-```
+```text
 ai-dev-pipeline-tool/
   src/
     ai_dev_pipeline/
@@ -178,7 +178,7 @@ ai-dev-pipeline-tool/
 
 ### state.json の形式
 
-```
+```text
 {
   "feature_name": "pipeline",
   "phase": "spec",
@@ -196,19 +196,19 @@ ai-dev-pipeline-tool/
 
 #### 初期化
 
-```
+```text
 init
 ```
 
 #### 状態確認
 
-```
+```text
 show-status
 ```
 
 #### 承認
 
-```
+```text
 approve spec
 approve tests
 ```

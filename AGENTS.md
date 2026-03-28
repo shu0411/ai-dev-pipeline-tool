@@ -4,7 +4,7 @@
 
 This repository contains a CLI tool for managing a staged AI-assisted development workflow:
 
-```
+```text
 spec → test → code
 ```
 
@@ -25,7 +25,7 @@ The goal is to enforce structured development using AI while preventing uncontro
 
 ## 3. Project Structure
 
-```
+```text
 src/ai_dev_pipeline_tool/
     cli.py
     state.py
@@ -48,7 +48,7 @@ workspace/current/
 
 ### Phases
 
-```
+```text
 spec → test → code
 ```
 
@@ -56,13 +56,13 @@ spec → test → code
 
 Stored in:
 
-```
+```text
 workspace/current/state.json
 ```
 
 Example:
 
-```
+```text
 {
   "feature_name": "pipeline",
   "phase": "spec",
@@ -95,13 +95,13 @@ Example:
 
 * Do NOT modify files under:
 
-  ```
+  ```text
   docs/specs/
   ```
 
 * Only write state to:
 
-  ```
+  ```text
   workspace/current/
   ```
 
@@ -133,7 +133,7 @@ When implementing:
 
 1. Read spec:
 
-   ```
+   ```text
     docs/specs/pipeline/spec.md
    ```
 
