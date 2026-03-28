@@ -125,6 +125,20 @@ Example:
   * edge cases (missing state, broken JSON)
 * Tests should clearly express intent in names
 
+### Test Naming and Description
+
+* Test function names should be written in English
+* Each test MUST include a docstring in Japanese
+* The docstring should clearly describe what the test verifies
+* Avoid vague descriptions
+
+Example:
+
+```python
+    def test_approve_tests_blocked_before_spec():
+        """specが未承認の場合、tests承認が拒否されること"""
+```
+
 ---
 
 ## 7. Task Execution Guidelines
