@@ -12,14 +12,20 @@ REQUIRED_KEYS = {
 }
 
 
-def default_state() -> dict:
-    return {
-        "feature_name": "pipeline",
+def default_state(
+    feature_name: str = "pipeline",
+    spec_path: str | None = None,
+) -> dict:
+    state = {
+        "feature_name": feature_name,
         "phase": "spec",
         "spec_approved": False,
         "tests_approved": False,
         "implementation_completed": False,
     }
+    if spec_path is not None:
+        state["spec_path"] = spec_path
+    return state
 
 
 def _validate_state(data: object) -> dict:
@@ -33,10 +39,14 @@ def _validate_state(data: object) -> dict:
     return data
 
 
-def initialize_state(state_path: str | Path) -> dict:
+def initialize_state(
+    state_path: str | Path,
+    feature_name: str = "pipeline",
+    spec_path: str | None = None,
+) -> dict:
     path = Path(state_path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    state = default_state()
+    state = default_state(feature_name=feature_name, spec_path=spec_path)
     path.write_text(json.dumps(state, indent=2), encoding="utf-8")
     return state
 
