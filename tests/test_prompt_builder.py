@@ -5,8 +5,7 @@ import pytest
 from conftest import import_project_module
 
 
-def test_build_prompt_for_tests_includes_required_instructions():
-    """tests用プロンプトが仕様で求められた指示を含むこと"""
+def test_tests用プロンプトが仕様で求められた指示を含むこと():
     prompt_builder_module = import_project_module("prompt_builder")
 
     prompt = prompt_builder_module.build_prompt(
@@ -25,8 +24,7 @@ def test_build_prompt_for_tests_includes_required_instructions():
     assert "不明点" in prompt
 
 
-def test_build_prompt_for_code_includes_required_instructions():
-    """code用プロンプトが仕様で求められた指示を含むこと"""
+def test_code用プロンプトが仕様で求められた指示を含むこと():
     prompt_builder_module = import_project_module("prompt_builder")
 
     prompt = prompt_builder_module.build_prompt(
@@ -43,8 +41,7 @@ def test_build_prompt_for_code_includes_required_instructions():
     assert "不明点" in prompt
 
 
-def test_build_prompt_rejects_unsupported_task_type():
-    """未対応のtask_typeをbuild_promptに渡すとエラーになること"""
+def test_未対応のtask_typeをbuild_promptに渡すとエラーになること():
     prompt_builder_module = import_project_module("prompt_builder")
 
     with pytest.raises(ValueError):

@@ -7,8 +7,7 @@ import pytest
 from conftest import import_project_module
 
 
-def test_initialize_state_creates_default_spec_phase_state_file(tmp_path):
-    """初期化時にspecフェーズの既定状態がstate.jsonへ保存されること"""
+def test_初期化時にspecフェーズの既定状態がstate_jsonへ保存されること(tmp_path):
     state_module = import_project_module("state")
     state_path = tmp_path / "workspace" / "current" / "state.json"
 
@@ -25,8 +24,7 @@ def test_initialize_state_creates_default_spec_phase_state_file(tmp_path):
     assert json.loads(state_path.read_text(encoding="utf-8")) == created_state
 
 
-def test_load_state_returns_persisted_state_when_json_is_valid(tmp_path):
-    """有効なstate.jsonから保存済みの状態をそのまま読み込めること"""
+def test_有効なstate_jsonから保存済みの状態をそのまま読み込めること(tmp_path):
     state_module = import_project_module("state")
     state_path = tmp_path / "state.json"
     persisted_state = {
@@ -43,8 +41,7 @@ def test_load_state_returns_persisted_state_when_json_is_valid(tmp_path):
     assert loaded_state == persisted_state
 
 
-def test_save_state_persists_updated_state_to_json_file(tmp_path):
-    """状態保存時に更新済みの内容がstate.jsonへ永続化されること"""
+def test_状態保存時に更新済みの内容がstate_jsonへ永続化されること(tmp_path):
     state_module = import_project_module("state")
     state_path = tmp_path / "workspace" / "current" / "state.json"
     state_to_save = {
@@ -60,8 +57,7 @@ def test_save_state_persists_updated_state_to_json_file(tmp_path):
     assert json.loads(state_path.read_text(encoding="utf-8")) == state_to_save
 
 
-def test_load_state_raises_file_not_found_when_state_json_is_missing(tmp_path):
-    """state.jsonが存在しない場合は読み込み時にFileNotFoundErrorになること"""
+def test_state_jsonが存在しない場合は読み込み時にFileNotFoundErrorになること(tmp_path):
     state_module = import_project_module("state")
     missing_path = tmp_path / "workspace" / "current" / "state.json"
 
@@ -69,8 +65,7 @@ def test_load_state_raises_file_not_found_when_state_json_is_missing(tmp_path):
         state_module.load_state(missing_path)
 
 
-def test_load_state_raises_value_error_when_state_json_is_broken(tmp_path):
-    """壊れたJSONのstate.jsonはValueErrorとして拒否されること"""
+def test_壊れたJSONのstate_jsonはValueErrorとして拒否されること(tmp_path):
     state_module = import_project_module("state")
     broken_path = tmp_path / "workspace" / "current" / "state.json"
     broken_path.parent.mkdir(parents=True, exist_ok=True)
@@ -80,8 +75,7 @@ def test_load_state_raises_value_error_when_state_json_is_broken(tmp_path):
         state_module.load_state(broken_path)
 
 
-def test_load_state_rejects_empty_json_object_as_invalid_state(tmp_path):
-    """空オブジェクトのstate.jsonは必須情報不足として拒否されること"""
+def test_空オブジェクトのstate_jsonは必須情報不足として拒否されること(tmp_path):
     state_module = import_project_module("state")
     empty_path = tmp_path / "workspace" / "current" / "state.json"
     empty_path.parent.mkdir(parents=True, exist_ok=True)
@@ -91,8 +85,7 @@ def test_load_state_rejects_empty_json_object_as_invalid_state(tmp_path):
         state_module.load_state(empty_path)
 
 
-def test_load_state_rejects_missing_required_keys(tmp_path):
-    """必須キーが欠損したstate.jsonは不正な状態として拒否されること"""
+def test_必須キーが欠損したstate_jsonは不正な状態として拒否されること(tmp_path):
     state_module = import_project_module("state")
     missing_key_path = tmp_path / "workspace" / "current" / "state.json"
     missing_key_path.parent.mkdir(parents=True, exist_ok=True)

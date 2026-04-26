@@ -38,8 +38,7 @@ def make_git_repo(target_repo: Path) -> None:
     (target_repo / ".git").mkdir(parents=True, exist_ok=True)
 
 
-def test_init_command_creates_state_file_in_target_repo(tmp_path, capsys):
-    """initで対象リポジトリ配下に状態ファイルを作成できること"""
+def test_initで対象リポジトリ配下に状態ファイルを作成できること(tmp_path, capsys):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     target_repo.mkdir()
@@ -70,8 +69,7 @@ def test_init_command_creates_state_file_in_target_repo(tmp_path, capsys):
     assert "todo-app" in capsys.readouterr().out
 
 
-def test_init_command_saves_spec_path_as_relative_when_absolute_path_is_given(tmp_path):
-    """initでspec絶対パスを受け取ってもstate.jsonには相対パスで保存されること"""
+def test_initでspec絶対パスを受け取ってもstate_jsonには相対パスで保存されること(tmp_path):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     spec_file = target_repo / "docs" / "specs" / "todo-app" / "spec.md"
@@ -96,8 +94,7 @@ def test_init_command_saves_spec_path_as_relative_when_absolute_path_is_given(tm
     assert read_target_state_file(target_repo)["spec_path"] == "docs/specs/todo-app/spec.md"
 
 
-def test_init_command_rejects_non_git_target_repo(tmp_path):
-    """Gitリポジトリでない対象パスをinitするとエラーになること"""
+def test_Gitリポジトリでない対象パスをinitするとエラーになること(tmp_path):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     target_repo.mkdir()
@@ -117,8 +114,7 @@ def test_init_command_rejects_non_git_target_repo(tmp_path):
         )
 
 
-def test_show_status_reads_state_from_target_repo(tmp_path, capsys):
-    """show-statusが対象リポジトリ内のstate.jsonを表示できること"""
+def test_show_statusが対象リポジトリ内のstate_jsonを表示できること(tmp_path, capsys):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     target_repo.mkdir()
@@ -142,8 +138,7 @@ def test_show_status_reads_state_from_target_repo(tmp_path, capsys):
     assert "docs/specs/todo-app/spec.md" in captured.out
 
 
-def test_approve_spec_updates_target_repo_state_file(tmp_path):
-    """approve specが対象リポジトリ内のphaseをtestへ更新すること"""
+def test_approve_specが対象リポジトリ内のphaseをtestへ更新すること(tmp_path):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     target_repo.mkdir()
@@ -165,8 +160,7 @@ def test_approve_spec_updates_target_repo_state_file(tmp_path):
     assert read_target_state_file(target_repo)["phase"] == "test"
 
 
-def test_run_tests_is_blocked_until_spec_is_approved(tmp_path):
-    """spec未承認の状態ではrun testsを実行できないこと"""
+def test_spec未承認の状態ではrun_testsを実行できないこと(tmp_path):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     target_repo.mkdir()
@@ -186,8 +180,7 @@ def test_run_tests_is_blocked_until_spec_is_approved(tmp_path):
         run_cli(cli_module, ["run", "tests", "--repo", str(target_repo)])
 
 
-def test_run_code_is_blocked_until_tests_are_approved(tmp_path):
-    """tests未承認の状態ではrun codeを実行できないこと"""
+def test_tests未承認の状態ではrun_codeを実行できないこと(tmp_path):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     target_repo.mkdir()
@@ -207,8 +200,7 @@ def test_run_code_is_blocked_until_tests_are_approved(tmp_path):
         run_cli(cli_module, ["run", "code", "--repo", str(target_repo)])
 
 
-def test_run_tests_rejects_missing_spec_file_before_calling_codex(tmp_path):
-    """specファイルが存在しない場合はCodex実行前にエラーになること"""
+def test_specファイルが存在しない場合はCodex実行前にエラーになること(tmp_path):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     target_repo.mkdir()
@@ -228,8 +220,7 @@ def test_run_tests_rejects_missing_spec_file_before_calling_codex(tmp_path):
         run_cli(cli_module, ["run", "tests", "--repo", str(target_repo)])
 
 
-def test_run_tests_does_not_update_state_after_successful_execution(tmp_path, monkeypatch):
-    """run tests成功後もstate.jsonのフェーズ情報は更新されないこと"""
+def test_run_tests成功後もstate_jsonのフェーズ情報は更新されないこと(tmp_path, monkeypatch):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     spec_file = target_repo / "docs" / "specs" / "todo-app" / "spec.md"
@@ -277,8 +268,7 @@ def test_run_tests_does_not_update_state_after_successful_execution(tmp_path, mo
     }
 
 
-def test_show_status_fails_before_target_repo_is_initialized(tmp_path):
-    """初期化前の対象リポジトリでshow-statusを実行するとエラーになること"""
+def test_初期化前の対象リポジトリでshow_statusを実行するとエラーになること(tmp_path):
     cli_module = import_project_module("cli")
     target_repo = tmp_path / "target-app"
     target_repo.mkdir()
